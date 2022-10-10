@@ -1,0 +1,50 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+
+}
+
+/* Custom Styles */
+
+textarea {
+    resize:none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* FireFox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.custom-image{
+    min-height: 200px;
+}
+
+.custom-image img {
+    height: 215px;
+    background-size: 100%;
+}
+.custom-image2 img {
+    height: 400px;
+    background-size: 100%;
+}
+

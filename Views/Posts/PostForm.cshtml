@@ -1,0 +1,93 @@
+﻿@model PostFormViewModel
+
+@{
+    ViewData["Title"] = "create post";
+}
+<div class="mt-2 mb-5">
+    <h2>@(Model.Id > 0 ? "Edit" : "Create new") post</h2>
+    <hr />
+</div>
+<section class="row justify-content-between">
+    <div class="col-md-6">
+        <form method="post" asp-action="@(Model.Id > 0 ? "Edit" : "Create")" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label class="text-muted" asp-for="Title"></label>
+                <input type="text" class="form-control" asp-for="Title" maxlength="250" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group pt-3">
+                <label class="text-muted" asp-for="CategoryId"></label>
+                <select class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                    <option></option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group pt-3">
+                <label class="text-muted" asp-for="Content"></label>
+                <textarea class="form-control" asp-for="Content" maxlength="2500" rows="5"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="mb-3 pt-3">
+                <label class="form-label text-muted" asp-for="Image"></label>
+                <input type="file" class="form-control" asp-for="Image" accept=".png, .jpg" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group pt-3 w-25">
+                <label class="text-muted" asp-for="Rate"></label>
+                <input type="text" class="form-control" asp-for="Rate" value="@(Model.Rate > 0 ? Model.Rate : string.Empty)" />
+                <span asp-validation-for="Rate" class="text-danger"></span>
+            </div>
+            <div class="form-group w-50 pt-3">
+                <label class="text-muted" asp-for="Published_In"></label>
+                <input type="text" class="form-control" asp-for="Published_In" />
+                <span asp-validation-for="Published_In" class="text-danger"></span>
+            </div>
+            <div class="mt-5">
+                <hr />
+            </div>
+
+            <div class="mt-4 mb-5">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check"></i>
+                    Save
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-x"></i>
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div id="image-container" class="@(Model.Id > 0 ? string.Empty : "d-none")">
+            <img src="@(Model.Id > 0 ? $"data:image/*;base64,{Convert.ToBase64String(Model.Image)}" : string.Empty)" alt="Image" class="img-thumbnail" />
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+        $(document).ready(function () {
+            $('#Image').on('change', function () {
+                var selectedFile = $(this).val().split('\\').pop();
+                $(this).siblings('label').text(selectedFile);
+
+                var imageContainer = $('#image-container');
+                var imageView = window.URL.createObjectURL(this.files[0]);
+
+                imageContainer.removeClass('d-none');
+                imageContainer.find('img').attr('src', imageView);
+            });
+
+            $('#Published_In').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                endDate: new Date(),
+                todayHighlight: true
+            });
+        });
+    </script>
+}
