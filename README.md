@@ -1,9 +1,9 @@
 # Simple-Crud 
 
-using:
+Using:
 
-  ASP.NET Core 6 MVC 
-  SQL SERVER 2019 
-  Entity Framework Core
+  ASP.NET Core 6 MVC \
+  SQL SERVER 2019 \
+  Entity Framework Core \
 
 
